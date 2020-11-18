@@ -19,6 +19,7 @@ class ApplicationController < Sinatra::Base
 
   post '/signup' do
     @user = User.new(username: params[:username], email: params[:email], password: params[:password])
+    binding.pry
     if @user.save 
       session[:id] = @user.id
       redirect to "/index"
