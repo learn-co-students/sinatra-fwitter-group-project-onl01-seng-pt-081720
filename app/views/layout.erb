@@ -4,6 +4,9 @@
     <title>Fwitter</title>
   </head>
   <body>
+    <% if logged_in? %>
+       <a href="/logout">Log out</a>
+    <% end %>
 
     <div class="container">
       <h1>Welcome to Fwitter!</h1>

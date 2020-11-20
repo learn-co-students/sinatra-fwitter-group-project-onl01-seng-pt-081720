@@ -10,24 +10,16 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
+    @tweets = Tweet.all
     erb :index
   end
 
-  get "/signup" do
-    erb :"signup"
-  end
+  helpers do
 
-  post '/signup' do
-    if params[:username].empty? || params[:email].empty? || params[:password].empty?
-      redirect to :signup
-    else  
-      @user = User.new(username: params[:username], email: params[:email], password: params[:password])
-      @user.save
-      session[:id] = @user.id
-      redirect to :index
+    def logged_in?
+      !!session[:user_id]
     end
-  end
-    
 
+  end
 
 end
