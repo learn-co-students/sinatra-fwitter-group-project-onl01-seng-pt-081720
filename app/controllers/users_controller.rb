@@ -3,12 +3,41 @@ class UsersController < ApplicationController
     #Sign Up
 
     get '/signup' do
+        if !logged_in?
         erb :signup
+        else
+            #does not let logged in user view signup page
+            redirect to '/tweets'
+        end
     end
 
     post '/signup' do
-        #does not let user login without a username
-        #log the user in and add the user_id to the session hash
-        redirect to "/tweets"
+       if params[:username] == "" || params[:email] == "" || params[:password] == ""
+        redirect to '/signup'
+       else 
+        @user = User.create(username: params[:username], email: params[:email], password: params[:password])
+        session[:user_id] = @user.id
+        redirect to '/tweets'
+       end
     end
+
+    #Log in
+    get '/login' do
+        if !logged_in?
+        erb :'users/login'
+        else 
+            redirect to '/tweets'
+        end
+    end
+
+    post '/login' do
+        user = User.find_by(:username => params[:username])
+        if user && user.authenticate(params[:password])
+            session[:user_id] = user.id
+            redirect to '/tweets'
+        else
+            redirect to '/login'
+        end
+    end
+
 end

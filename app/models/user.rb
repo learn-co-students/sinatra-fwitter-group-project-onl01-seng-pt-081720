@@ -3,15 +3,12 @@ class User < ActiveRecord::Base
 
   has_secure_password
   validates :username, presence: true
-  validates :password_digest, :email, presence: true
-  validates :email, uniqueness: true
+  validates :email , presence: true
+  validates :password , presence: true
+  validates :username, uniqueness: true
+ 
+ extend Slugable::ClassMethods
+ include Slugable::InstanceMethods
 
-
-  def slug
-    username.parameterize
-  end
-
-  def self.find_by_slug(slug)
-    self.all.find{|user| user.slug == slug}
-  end
+  
 end
