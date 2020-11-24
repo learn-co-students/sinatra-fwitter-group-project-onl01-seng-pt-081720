@@ -71,7 +71,6 @@ patch '/tweets/:id' do
     if logged_in? && tweet.user == current_user
         if !params[:content].empty?
            tweet.update(content: params[:content])
-           tweet.save
             redirect to '/tweets'
         else
         redirect to "tweets/#{tweet.id}/edit"
