@@ -1,0 +1,4 @@
+<% if Helpers.is_logged_in?(session) %>
+  <% @user.tweets.each do |t|%>
+    <%=t.content%>
+  <% end %>
