@@ -1,4 +1,7 @@
+
 class User < ActiveRecord::Base
-  has_secure_password
+  include Slugifiable::InstanceMethods
+  extend Slugifiable::ClassMethods
   has_many :tweets
+  has_secure_password
 end
